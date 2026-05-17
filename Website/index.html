@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simply Tools — Simple Chrome Extensions</title>
+  <meta name="description" content="A collection of simple Chrome extensions. One job each. Free."/>
+  <meta property="og:title" content="Simply Tools"/>
+  <meta property="og:description" content="Simple Chrome extensions. One job each. Free."/>
+  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a1a1a;
+      --bg2: #222222;
+      --bg3: #2a2a2a;
+      --text: #f0f0f0;
+      --text2: #888;
+      --text3: #444;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ── */
+    nav {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text);
+    }
+
+    .brand-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-name span { color: var(--text2); font-weight: 400; }
+
+    .nav-right {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .nav-right a {
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-right a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 100px 48px 80px;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(44px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    h1 .dim { color: var(--text3); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text2);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ── Grid ── */
+    .grid-section {
+      padding: 0 48px 100px;
+      flex: 1;
+    }
+
+    .grid-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 24px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+
+    .card:hover { background: var(--bg2); }
+
+    .card.coming-soon {
+      opacity: 0.45;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .card-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .card-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-meta { flex: 1; min-width: 0; }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+
+    .card-tag {
+      font-size: 11px;
+      color: var(--text3);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-platform {
+      font-size: 12px;
+      color: var(--text3);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-platform svg { width: 12px; height: 12px; }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 7px;
+      transition: opacity 0.15s;
+    }
+
+    .card-cta:hover { opacity: 0.85; }
+
+    .card-cta svg { width: 12px; height: 12px; }
+
+    /* SimplyClip — burgundy */
+    .card-simplyclip .card-cta {
+      background: rgba(112,0,21,0.15);
+      color: #e88;
+      border: 1px solid rgba(112,0,21,0.25);
+    }
+
+    .card-simplyclip .card-name { color: #f0f0f0; }
+
+    /* SimplyComment — white/neutral */
+    .card-simplycomment .card-cta {
+      background: rgba(255,255,255,0.07);
+      color: #ccc;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Coming soon badge */
+    .badge-soon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text3);
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Coming soon logo placeholders */
+    .logo-simplydrink {
+      background: #0a1628;
+      color: #4a9eff;
+    }
+
+    .logo-simplybreak {
+      background: #0d1a0d;
+      color: #3ecf8e;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      font-size: 13px;
+      color: var(--text3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text2); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 20px 24px; }
+      .hero { padding: 60px 24px 48px; }
+      .grid-section { padding: 0 24px 60px; }
+      footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="brand-name">Simply<span>Tools</span></span>
+    </a>
+    <div class="nav-right">
+      <a href="mailto:hello@usesimplytools.com">hello@usesimplytools.com</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <p class="hero-eyebrow">Chrome Extensions</p>
+    <h1>Simple tools.<br/><span class="dim">One job each.</span></h1>
+    <p class="hero-sub">A growing collection of focused Chrome extensions. No bloat, no subscriptions, no nonsense.</p>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid-section">
+    <p class="grid-label">Extensions</p>
+    <div class="grid">
+
+      <!-- SimplyClip -->
+      <a href="https://clip.usesimplytools.com" class="card card-simplyclip">
+        <div class="card-header">
+          <div class="card-logo">
+            <img src="logos/logo_source.png" alt="SimplyClip"/>
+          </div>
+          <div class="card-meta">
+            <div class="card-name">SimplyClip</div>
+            <div class="card-tag">YouTube · Video</div>
+          </div>
+        </div>
+        <p class="card-desc">Clip and download any segment of any YouTube video. Set your range, choose quality, save as MP4.</p>
+        <div class="card-footer">
+          <span class="card-platform">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            Chrome
+          </span>
+          <span class="card-cta">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- SimplyComment -->
+      <a href="https://chromewebstore.google.com/detail/simplycomment/elojcifdknhfknoifhdmhjhgbiejdcjo" target="_blank" class="card card-simplycomment">
+        <div class="card-header">
+          <div class="card-logo">
+            <img src="logos/icon128.png" alt="SimplyComment"/>
+          </div>
+          <div class="card-meta">
+            <div class="card-name">SimplyComment</div>
+            <div class="card-tag">LinkedIn · AI</div>
+          </div>
+        </div>
+        <p class="card-desc">Generate personalised LinkedIn comments that sound like you. Build engagement without spending hours writing.</p>
+        <div class="card-footer">
+          <span class="card-platform">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            Chrome
+          </span>
+          <span class="card-cta">
+            Get extension
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- SimplyDrink — coming soon -->
+      <div class="card coming-soon">
+        <div class="badge-soon">Coming soon</div>
+        <div class="card-header">
+          <div class="card-logo logo-simplydrink">💧</div>
+          <div class="card-meta">
+            <div class="card-name">SimplyDrink</div>
+            <div class="card-tag">Productivity · Health</div>
+          </div>
+        </div>
+        <p class="card-desc">A gentle water drinking reminder that lives in your browser. Stay hydrated without thinking about it.</p>
+        <div class="card-footer">
+          <span class="card-platform">Chrome</span>
+        </div>
+      </div>
+
+      <!-- SimplyBreak — coming soon -->
+      <div class="card coming-soon">
+        <div class="badge-soon">Coming soon</div>
+        <div class="card-header">
+          <div class="card-logo logo-simplybreak">⏱</div>
+          <div class="card-meta">
+            <div class="card-name">SimplyBreak</div>
+            <div class="card-tag">Productivity · Focus</div>
+          </div>
+        </div>
+        <p class="card-desc">A minimal Pomodoro timer in your browser. Work in focused sessions, take proper breaks.</p>
+        <div class="card-footer">
+          <span class="card-platform">Chrome</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-left">© 2026 Simply Tools</span>
+    <div class="footer-links">
+      <a href="mailto:hello@usesimplytools.com">Contact</a>
+      <a href="https://clip.usesimplytools.com/privacy">Privacy</a>
+    </div>
+  </footer>
+
+</body>
+</html>
